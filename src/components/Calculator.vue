@@ -1,8 +1,8 @@
 <template>
   <div class="calculator">
     <div class="display">
-      <input class="display__input" v-model.number="operand1" type="number" />
-      <input class="display__input" v-model.number="operand2" type="number" />
+      <input class="display__input" name="operand1" v-model.number="operand1" type="number" />
+      <input class="display__input" name="operand2" v-model.number="operand2" type="number" />
       <div class="display__result" v-show="!error">
         = {{ result }} <br />
         Fibonacci: {{ fibResult }}
@@ -18,6 +18,7 @@
     <div class="keyboard">
       <button
         class="keyboard__button"
+        :name="operation.char"
         type="button"
         v-for="operation in operations"
         :key="operation.char"
@@ -42,6 +43,7 @@
       <div class="screen-keyboard__button-block">
         <button
           class="screen-keyboard__button"
+          :name="button.char"
           type="button"
           v-for="button in screenKeyboard"
           :key="button.char"
@@ -52,8 +54,9 @@
         </button>
         <button
           class="screen-keyboard__button screen-keyboard__button_delete"
+          name="delete"
           type="button"
-          title="Удалитьd"
+          title="Удалить"
           @click="deleteScreenKeyboard"
         >
           &#8592;
@@ -87,11 +90,11 @@ export default {
     return {
       operations: [
         { char: '+', title: 'Сложение' },
-        { char: '-', title: 'Вычитаение' },
+        { char: '-', title: 'Вычитание' },
         { char: '*', title: 'Умножение' },
         { char: '/', title: 'Деление' },
         { char: '//', title: 'Целочисленное деление' },
-        { char: '^', title: 'Возведение в степернь' },
+        { char: '^', title: 'Возведение в степень' },
       ],
       operand1: 0,
       operand2: 0,
@@ -102,6 +105,7 @@ export default {
       showScreenKeyboard: false,
       selectedOperand: 'operand1',
       screenKeyboard: [
+        { char: '0', title: '0' },
         { char: '1', title: '1' },
         { char: '2', title: '2' },
         { char: '3', title: '3' },
@@ -116,10 +120,10 @@ export default {
   },
   computed: {
     fibonacci1() {
-      return this.clakFibonacci(this.operand1);
+      return this.calkFibonacci(this.operand1);
     },
     fibonacci2() {
-      return this.clakFibonacci(this.operand2);
+      return this.calkFibonacci(this.operand2);
     },
   },
   methods: {
@@ -155,7 +159,7 @@ export default {
       this.result = this.operand1 ** this.operand2;
       this.fibResult = this.fibonacci1 ** this.fibonacci2;
     },
-    clakFibonacci(n) {
+    calkFibonacci(n) {
       let prev = 0;
       let next = 1;
       for (let i = 0; i < n; i += 1) {
